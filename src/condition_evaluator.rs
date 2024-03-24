@@ -65,4 +65,22 @@ impl ConditionEvaluator {
             conf,
         }
     }
+
+    pub fn generate_conditions(&mut self, index: usize) -> Vec<Vec<i32>> {
+        let x = 2usize.pow(self.n_valid as u32);
+        if index == self.n_valid {
+            self.condition_count += 1;
+            println!("{}/{}", self.condition_count, x);
+            self.temp_wants.clone()
+        } else {
+            let (i, j) = self.valid_spot[index];
+            self.temp_wants[i][j] = 1;
+            let mut conditions = self.generate_conditions(index + 1);
+
+            self.temp_wants[i][j] = -1;
+            conditions.extend(self.generate_conditions(index + 1));
+
+            conditions
+        }
+    }
 }
