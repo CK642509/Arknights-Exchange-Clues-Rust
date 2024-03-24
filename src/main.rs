@@ -2,6 +2,9 @@ use std::fs::File;
 use std::io::{self, BufRead};
 use std::path::Path;
 
+mod condition_evaluator;
+use condition_evaluator::ConditionEvaluator;
+
 const NUM_CLUES: usize = 7;
 
 fn get_players() -> io::Result<Vec<String>> {
@@ -115,6 +118,8 @@ fn main() -> io::Result<()> {
     println!("===================== After checking =====================");
     println!("{:?}", all_stores);
     println!("{:?}", all_wants);
+
+    let mut evaluator = ConditionEvaluator::new(all_wants);
 
     Ok(())
 }
