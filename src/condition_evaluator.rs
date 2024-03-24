@@ -83,4 +83,60 @@ impl ConditionEvaluator {
             conditions
         }
     }
+
+    pub fn evaluate(&mut self) {
+        for condition in self.generate_conditions(0) {
+            let tmp_rank = self.try_condition(&condition, &self.conf);
+            if let Some(tmp_rank) = tmp_rank {
+                for (&tmp_score, &best_score) in tmp_rank.iter().zip(self.best_rank.iter()) {
+                    if tmp_score < best_score {
+                        self.best_rank = tmp_rank.clone();
+                        self.best_condition = Some(condition.clone());
+                        self.best_chg = Some(tmp_rank[5]);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    // fn try_condition(&self, condition: &Vec<Vec<i32>>, conf: &Vec<Vec<i32>>) -> Option<Vec<i32>> {
+    //     let mut tmp_how = vec![vec![0]; self.n_clues];
+    //     let mut tmp_rank = vec![0; 5];
+    //     let num_conf = self.n_players * (self.n_players - 1);
+    //     let mut tmp_vote = vec![0; num_conf];
+    //     let mut tmp_chg = Vec::new();
+    //     let mut tmp_num_chg = 0;
+
+    //     // ... same as before ...
+
+    //     fn log(j: usize, clue_no: usize, p1: i32, p2: i32, tmp_vote: &mut Vec<i32>, tmp_chg: &mut Vec<Vec<i32>>, tmp_num_chg: &mut i32) {
+    //         tmp_vote[j] += 1;
+    //         *tmp_num_chg += 1;
+    //         tmp_chg.push(vec![clue_no as i32, p1, p2]);
+    //     }
+
+    //     // ... same as before ...
+
+    //     fn n_way_exchange(n: i32, tmp_how: &Vec<Vec<i32>>, tmp_vote: &mut Vec<i32>, tmp_chg: &mut Vec<Vec<i32>>, tmp_num_chg: i32, conf: &Vec<Vec<i32>>, num_conf: usize) -> (Vec<i32>, Vec<Vec<i32>>, i32) {
+    //         // get_derangement is not defined in your Python code.
+    //         // Here is a placeholder definition. You will need to replace it with the actual implementation.
+    //         fn get_derangement(n: i32) -> Vec<Vec<i32>> {
+    //             vec![vec![0; n as usize]]
+    //         }
+
+    //         // ... same as before ...
+
+    //         (tmp_vote.clone(), tmp_chg.clone(), tmp_num_chg)
+    //     }
+
+    //     // ... same as before ...
+
+    //     Some(tmp_rank)
+    // }
+
+    fn try_condition(&self, condition: &Vec<i32>, conf: &Vec<Vec<usize>>) -> Option<Vec<i32>> {
+        // Replace this with the actual implementation.
+        None
+    }
 }
